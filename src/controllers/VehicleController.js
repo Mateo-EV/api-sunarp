@@ -16,7 +16,10 @@ const getCaptchaImage = async (req, res) => {
    */
   const plate = req.params.plate
 
-  const browser = await puppeteer.launch({ headless: true })
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"]
+  })
   const page = await browser.newPage()
 
   await page.goto("https://www2.sunarp.gob.pe/consulta-vehicular/inicio", {
