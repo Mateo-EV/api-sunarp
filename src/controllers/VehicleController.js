@@ -37,24 +37,22 @@ const getCaptchaImage = async (req, res) => {
   const captchaBase64 = await page.$eval(captchaSelector, img => img.src)
 
   const base64Data = captchaBase64.replace(/^data:image\/png;base64,/, "")
-  const buffer = Buffer.from(base64Data, "base64")
+  // const buffer = Buffer.from(base64Data, "base64")
 
   // Preprocesar la imagen con sharp
-  const preprocessedBuffer = await sharp(buffer)
-    .greyscale() // Convertir a escala de grises
-    .threshold(128) // Aplicar un umbral para hacer la imagen binaria
-    .normalise() // Normalizar la imagen
-    .sharpen() // Aplicar un filtro de enfoque
-    .removeAlpha() // Eliminar canal alfa si existe
-    .toBuffer()
+  // const preprocessedBuffer = await sharp(buffer)
+  //   .greyscale() // Convertir a escala de grises
+  //   .threshold(128) // Aplicar un umbral para hacer la imagen binaria
+  //   .normalise() // Normalizar la imagen
+  //   .sharpen() // Aplicar un filtro de enfoque
+  //   .removeAlpha() // Eliminar canal alfa si existe
+  //   .toBuffer()
 
-  // Guardar imagen
-  const id = crypto.randomUUID()
-  fs.writeFileSync(`captchas/${id}.png`, preprocessedBuffer)
+  // // Guardar imagen
+  // const id = crypto.randomUUID()
+  // fs.writeFileSync(`captchas/${id}.png`, preprocessedBuffer)
 
-  const code = (
-    await solver.imageCaptcha(fs.readFileSync(`captchas/${id}.png`, "base64"))
-  ).data
+  const code = (await solver.imageCaptcha(base64Data)).data
   const codeCaptchaSelector = "#codigoCaptcha"
   await page.waitForSelector(codeCaptchaSelector)
   await page.type(codeCaptchaSelector, code)
