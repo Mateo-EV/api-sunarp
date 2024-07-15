@@ -36,7 +36,6 @@ const getCaptchaImage = async (req, res) => {
   await page.waitForSelector(captchaSelector)
   const captchaBase64 = await page.$eval(captchaSelector, img => img.src)
 
-  const base64Data = captchaBase64.replace(/^data:image\/png;base64,/, "")
   // const buffer = Buffer.from(base64Data, "base64")
 
   // Preprocesar la imagen con sharp
@@ -52,7 +51,7 @@ const getCaptchaImage = async (req, res) => {
   // const id = crypto.randomUUID()
   // fs.writeFileSync(`captchas/${id}.png`, preprocessedBuffer)
 
-  const code = (await solver.imageCaptcha(base64Data)).data
+  const code = (await solver.imageCaptcha(captchaBase64)).data
   const codeCaptchaSelector = "#codigoCaptcha"
   await page.waitForSelector(codeCaptchaSelector)
   await page.type(codeCaptchaSelector, code)
