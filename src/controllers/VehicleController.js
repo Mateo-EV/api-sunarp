@@ -36,6 +36,8 @@ const getCaptchaImage = async (req, res) => {
   await page.waitForSelector(captchaSelector)
   const captchaBase64 = await page.$eval(captchaSelector, img => img.src)
   console.log(captchaBase64)
+
+  await page.screenshot({ path: "screenshot.png" })
   // const buffer = Buffer.from(base64Data, "base64")
 
   // Preprocesar la imagen con sharp
