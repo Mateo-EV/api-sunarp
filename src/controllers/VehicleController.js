@@ -86,6 +86,7 @@ const getCaptchaImage = async (req, res) => {
     res.writeHead(200, { "Content-Type": "image/png" })
     res.end(datos_buffer, "binary")
   } catch (e) {
+    console.log(e)
     await browser.close()
     return res.status(400).send("Algo salió mal")
   }
