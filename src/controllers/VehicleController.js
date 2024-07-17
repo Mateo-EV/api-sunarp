@@ -70,7 +70,7 @@ const getCaptchaImage = async (req, res) => {
     // Esperar a que el modal con los datos se cargue
     const modalSelector = "div.container-data-vehiculo.ng-star-inserted" // Selector del modal
 
-    await page.waitForSelector(modalSelector, { timeout: 1000 })
+    await page.waitForSelector(modalSelector, { timeout: 5000 })
 
     // Descargar la imagen
     const imgSelector = `${modalSelector} img`
