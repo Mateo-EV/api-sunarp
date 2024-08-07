@@ -20,6 +20,8 @@ const getCaptchaImage = async (req, res) => {
     args: ["--no-sandbox", "--disable-setuid-sandbox"]
   })
   try {
+    console.log("hi")
+
     const page = await browser.newPage()
 
     await page.goto("https://www2.sunarp.gob.pe/consulta-vehicular/inicio", {
