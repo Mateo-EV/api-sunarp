@@ -20,8 +20,6 @@ const getCaptchaImage = async (req, res) => {
     args: ["--no-sandbox", "--disable-setuid-sandbox"]
   })
   try {
-    console.log("hi")
-
     const page = await browser.newPage()
 
     await page.goto("https://www2.sunarp.gob.pe/consulta-vehicular/inicio", {
@@ -29,10 +27,16 @@ const getCaptchaImage = async (req, res) => {
       timeout: 60000
     })
 
+    console.log("hi")
+
     await page.waitForSelector(".ngx-spinner-overlay", { hidden: true })
     // Completar formulario de búsqueda
+
+    console.log("hi")
     const plateSelector = "#nroPlaca"
     await page.waitForSelector(plateSelector)
+
+    console.log("hi")
 
     await page.waitForSelector(".ngx-spinner-overlay", { hidden: true })
     // Analizar el captcha
@@ -41,6 +45,9 @@ const getCaptchaImage = async (req, res) => {
     const captchaBase64 = await page.$eval(captchaSelector, img => img.src)
 
     await page.screenshot({ path: "screenshot.png" })
+
+    console.log("hi")
+
     // const buffer = Buffer.from(base64Data, "base64")
 
     // Preprocesar la imagen con sharp
