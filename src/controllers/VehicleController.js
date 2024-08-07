@@ -17,30 +17,22 @@ const getCaptchaImage = async (req, res) => {
   const plate = req.params.plate
 
   console.log("hi")
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
-    timeout: 60000
-  })
-
-  console.log("hi")
+  let browser = null
   try {
-    console.log("hi")
+    browser = await puppeteer.launch({
+      headless: true,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"]
+    })
     const page = await browser.newPage()
-
-    console.log("hi")
 
     await page.goto("https://www2.sunarp.gob.pe/consulta-vehicular/inicio", {
       waitUntil: "networkidle2",
       timeout: 60000
     })
 
-    console.log("hi")
-
     await page.waitForSelector(".ngx-spinner-overlay", { hidden: true })
     // Completar formulario de búsqueda
 
-    console.log("hi")
     const plateSelector = "#nroPlaca"
     await page.waitForSelector(plateSelector)
 
@@ -104,7 +96,7 @@ const getCaptchaImage = async (req, res) => {
     res.end(datos_buffer, "binary")
   } catch (e) {
     console.log(e)
-    await browser.close()
+    if (browser) await browser.close()
     return res.status(400).send("Algo salió mal")
   }
 }
