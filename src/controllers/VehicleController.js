@@ -19,7 +19,8 @@ const getCaptchaImage = async (req, res) => {
   console.log("hi")
   const browser = await puppeteer.launch({
     headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"]
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    timeout: 60000
   })
 
   console.log("hi")
