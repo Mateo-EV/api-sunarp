@@ -15,10 +15,14 @@ const getCaptchaImage = async (req, res) => {
    * @const {string} plate - The vehicle plate number.
    */
   const plate = req.params.plate
+
+  console.log("hi")
   const browser = await puppeteer.launch({
     headless: true,
     args: ["--no-sandbox", "--disable-setuid-sandbox"]
   })
+
+  console.log("hi")
   try {
     console.log("hi")
     const page = await browser.newPage()
