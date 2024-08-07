@@ -16,7 +16,6 @@ const getCaptchaImage = async (req, res) => {
    */
   const plate = req.params.plate
 
-  console.log("hi")
   let browser = null
   try {
     browser = await puppeteer.launch({
@@ -36,17 +35,11 @@ const getCaptchaImage = async (req, res) => {
     const plateSelector = "#nroPlaca"
     await page.waitForSelector(plateSelector)
 
-    console.log("hi")
-
     await page.waitForSelector(".ngx-spinner-overlay", { hidden: true })
     // Analizar el captcha
     const captchaSelector = "#image"
     await page.waitForSelector(captchaSelector)
     const captchaBase64 = await page.$eval(captchaSelector, img => img.src)
-
-    await page.screenshot({ path: "screenshot.png" })
-
-    console.log("hi")
 
     // const buffer = Buffer.from(base64Data, "base64")
 
@@ -68,7 +61,6 @@ const getCaptchaImage = async (req, res) => {
     await page.waitForSelector(codeCaptchaSelector)
     await page.type(codeCaptchaSelector, code)
     await page.type(plateSelector, plate)
-    await page.screenshot({ path: "screenshot1.png" })
 
     // Darle click al botón
     const buttonSelector =
